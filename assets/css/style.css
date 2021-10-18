@@ -1,6 +1,173 @@
+.flex, .flex-column, .calculator, .set-theme, .keyboard, .flex-row, .heading, .theme, .select-theme, .keyboard-row, body, .switch, .result, .key {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex; }
+
+.flex-column, .calculator, .set-theme, .keyboard {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column; }
+
+.flex-row, .heading, .theme, .select-theme, .keyboard-row {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row; }
+
 * {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   margin: 0;
   padding: 0;
   scroll-behavior: smooth; }
+
+body {
+  position: relative;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  height: 100vh;
+  font-family: "Spartan", sans-serif;
+  font-size: 32px;
+  background-color: #3a4764; }
+
+.calculator {
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 325px;
+  height: 620px; }
+
+.heading {
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 70px;
+  color: white; }
+
+.theme {
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -ms-flex-item-align: end;
+      align-self: flex-end;
+  width: 50%;
+  height: 90%; }
+  .theme h6 {
+    font-size: 12px;
+    -ms-flex-item-align: center;
+        -ms-grid-row-align: center;
+        align-self: center; }
+
+.set-theme {
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -ms-flex-item-align: start;
+      align-self: flex-start;
+  font-size: 14px;
+  width: 45%;
+  height: 70%; }
+
+.select-theme {
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  font-size: 12px; }
+
+.switch {
+  -ms-flex-item-align: end;
+      align-self: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  padding: 5px;
+  width: 100%;
+  height: 50%;
+  border-radius: 20px;
+  background-color: #232c43; }
+
+.switch-ball {
+  width: 14px;
+  height: 14px;
+  background-color: #d03f2f;
+  border-radius: 50%; }
+
+.result {
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 100px;
+  padding: 25px;
+  color: white;
+  background-color: #182034; }
+
+.result, .keyboard {
+  border-radius: 10px; }
+
+.keyboard {
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  height: 65%;
+  padding: 17px;
+  background-color: #232c43; }
+
+.keyboard-row {
+  height: 15%;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between; }
+
+.key {
+  width: 62px;
+  height: 62px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 5px;
+  color: #444b5a;
+  background-color: #eae3dc;
+  -webkit-box-shadow: 0px 3.5px 0px 0px #b4a597;
+          box-shadow: 0px 3.5px 0px 0px #b4a597; }
+
+.del, .reset, .equals {
+  font-size: 16px;
+  color: white; }
+
+.del, .reset {
+  background-color: #637097;
+  -webkit-box-shadow: 0px 3.5px 0px 0px #404e72;
+          box-shadow: 0px 3.5px 0px 0px #404e72; }
+
+.equals {
+  background-color: #d03f2f;
+  -webkit-box-shadow: 0px 3.5px 0px 0px #93261a;
+          box-shadow: 0px 3.5px 0px 0px #93261a; }
+
+.reset, .equals {
+  width: 139px; }
+
+.attribution {
+  position: absolute;
+  bottom: 0;
+  font-size: 10px;
+  color: white;
+  display: none; }
