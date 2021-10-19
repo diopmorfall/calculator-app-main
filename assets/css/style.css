@@ -41,7 +41,7 @@ body {
       -ms-flex-pack: justify;
           justify-content: space-between;
   width: 325px;
-  height: 620px; }
+  height: 615px; }
 
 .heading {
   -webkit-box-pack: justify;
@@ -50,7 +50,7 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  height: 70px;
+  height: 13%;
   color: white; }
 
 .theme {
@@ -112,7 +112,7 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  height: 100px;
+  height: 16%;
   padding: 25px;
   color: white;
   background-color: #182034; }
@@ -123,15 +123,14 @@ body {
 .keyboard {
   -ms-flex-pack: distribute;
       justify-content: space-around;
-  height: 65%;
+  height: 66%;
   padding: 17px;
   background-color: #232c43; }
 
 .keyboard-row {
-  height: 15%;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between; }
+  height: 17%;
+  -ms-flex-pack: distribute;
+      justify-content: space-around; }
 
 .key {
   width: 62px;
@@ -147,6 +146,8 @@ body {
   background-color: #eae3dc;
   -webkit-box-shadow: 0px 3.5px 0px 0px #b4a597;
           box-shadow: 0px 3.5px 0px 0px #b4a597; }
+  .key:active {
+    background-color: #b4a597; }
 
 .del, .reset, .equals {
   font-size: 16px;
@@ -156,14 +157,18 @@ body {
   background-color: #637097;
   -webkit-box-shadow: 0px 3.5px 0px 0px #404e72;
           box-shadow: 0px 3.5px 0px 0px #404e72; }
+  .del:active, .reset:active {
+    background-color: #404e72; }
 
 .equals {
   background-color: #d03f2f;
   -webkit-box-shadow: 0px 3.5px 0px 0px #93261a;
           box-shadow: 0px 3.5px 0px 0px #93261a; }
+  .equals:active {
+    background-color: #93261a; }
 
 .reset, .equals {
-  width: 139px; }
+  width: 46%; }
 
 .attribution {
   position: absolute;
@@ -171,3 +176,43 @@ body {
   font-size: 10px;
   color: white;
   display: none; }
+
+@media only screen and (max-height: 500px) and (orientation: landscape) {
+  .calculator {
+    height: 90vh;
+    width: 90%; }
+  .theme {
+    width: 35%;
+    height: 100%; }
+  .switch {
+    height: 70%; }
+  .key {
+    width: 15%;
+    height: 80%;
+    font-size: 18px; }
+  .reset, .equals {
+    width: 40%; } }
+
+@media only screen and (min-width: 600px) and (max-width: 999px) {
+  .calculator {
+    width: 500px; }
+  .theme {
+    width: 40%; }
+  .key {
+    width: 20%; }
+  .reset, .equals {
+    width: 45%; } }
+
+@media only screen and (min-width: 1000px) {
+  .calculator {
+    width: 550px;
+    height: 650px; }
+  .theme {
+    width: 30%; }
+  .keyboard-row {
+    -ms-flex-pack: distribute;
+        justify-content: space-around; }
+  .key {
+    width: 20%; }
+  .reset, .equals {
+    width: 45%; } }
