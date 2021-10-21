@@ -1,5 +1,6 @@
 const themeSetter = document.querySelector(".switch");
 const selectedTheme = document.querySelector(".switch-ball");
+
 const display = document.querySelector(".result");
 const delKey = document.querySelector(".del");
 const resetKey = document.querySelector(".reset");
@@ -12,45 +13,80 @@ const decimalKey = document.querySelector(".dec");
 const numbers = document.querySelectorAll(".num");
 
 const printable = [additionKey, substractionKey, moltiplicationKey, divisionKey, decimalKey, numbers];
+const operators = [additionKey, substractionKey, moltiplicationKey, divisionKey];
 
 //todo: show everything (number, operators) after click (or keydown)
 
-for(let i = 0; i < printable.length; i++){
-    if(printable[i] === numbers){
+for(let item of printable){
+    if(item === numbers){
         for(let num of numbers){
             num.addEventListener("click", function(){
-                display.textContent += num.textContent;
+                display.textContent = display.textContent.toString() + num.textContent.toString();
             });
         }
     } else {
-        printable[i].addEventListener("click", function(){
-            display.textContent += printable[i].textContent;
+        item.addEventListener("click", function(){
+            display.textContent = display.textContent.toString() + item.textContent.toString();
         });
     }
 }
 
-decimalKey.addEventListener("click", function(){ //todo: let's check how can we insert only one decimal point
+/*decimalKey.addEventListener("click", function(){ //todo: let's check how can we insert only one decimal point
     if(display.textContent.includes(".")){
-        display.textContent += "";
-    } else {
-        display.textContent += decimalKey.textContent;
+        return;
     }
-});
+});*/
 
-//todo: reset deletes everything
+//todo: check how can we correct the accuracy loss in decimal operations
 
 resetKey.addEventListener("click", function(){
     display.textContent = "";
 });
 
-//todo: del deletes the last character
 delKey.addEventListener("click", function(){
     display.textContent = display.textContent.slice(0, -1); //* returns all the string except from the part starting from -1
 });
 
-//todo: equals triggers the calculation
-
 equalsKey.addEventListener("click", function(){
     let expression = display.textContent;
+
+    let operatorPos = expression.search(/\+|-|x|÷/); //? position of the operator
+    let operator = expression[operatorPos];
+    let firstOperand = expression.slice(0, operatorPos);
+    let secondOperand = display.textContent.slice(operatorPos+1);
     
+    firstOperand = showResult(compute(firstOperand, operator, secondOperand));
 });
+
+function showResult(result){
+    display.textContent = result;
+}
+
+function compute(firstValue, operation, secondValue){
+    let result;
+    firstValue = parseFloat(firstValue);
+    secondValue = parseFloat(secondValue);
+    switch(operation){
+        case "+":
+            result = firstValue + secondValue;
+            break;
+
+        case "-":
+            result = firstValue - secondValue;
+            break;
+
+        case "x":
+            result = firstValue * secondValue;
+            break;
+
+        case "÷":
+            result = firstValue / secondValue;
+            break;
+    }
+
+    if(result === NaN || result === Infinity){
+        result = "Error";
+    }
+    return result.toString();
+}
+

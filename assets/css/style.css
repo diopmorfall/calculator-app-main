@@ -1,4 +1,4 @@
-.flex, .flex-column, .calculator, .set-theme, .keyboard, .flex-row, .heading, .theme, .select-theme, .keyboard-row, body, .switch, .result, .key {
+.flex, .flex-column, .calculator, .set-theme, .keyboard, .flex-row, .heading, .theme, .select-theme, .keyboard-row, body, .switch, .result, button {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex; }
@@ -115,7 +115,9 @@ body {
   height: 16%;
   padding: 25px;
   color: white;
-  background-color: #182034; }
+  background-color: #182034;
+  word-wrap: break-word;
+  word-break: break-all; }
 
 .result, .keyboard {
   border-radius: 10px; }
@@ -132,7 +134,7 @@ body {
   -ms-flex-pack: distribute;
       justify-content: space-around; }
 
-.key {
+button {
   width: 62px;
   height: 62px;
   -webkit-box-pack: center;
@@ -142,11 +144,14 @@ body {
       -ms-flex-align: center;
           align-items: center;
   border-radius: 5px;
+  border: none;
+  font-size: 32px;
+  font-weight: 700;
   color: #444b5a;
   background-color: #eae3dc;
   -webkit-box-shadow: 0px 3.5px 0px 0px #b4a597;
           box-shadow: 0px 3.5px 0px 0px #b4a597; }
-  .key:active {
+  button:active {
     background-color: #b4a597; }
 
 .del, .reset, .equals {
@@ -186,7 +191,7 @@ body {
     height: 100%; }
   .switch {
     height: 70%; }
-  .key {
+  button {
     width: 15%;
     height: 80%;
     font-size: 18px; }
@@ -198,7 +203,7 @@ body {
     width: 500px; }
   .theme {
     width: 40%; }
-  .key {
+  button {
     width: 20%; }
   .reset, .equals {
     width: 45%; } }
@@ -212,7 +217,7 @@ body {
   .keyboard-row {
     -ms-flex-pack: distribute;
         justify-content: space-around; }
-  .key {
+  button {
     width: 20%; }
   .reset, .equals {
     width: 45%; } }
