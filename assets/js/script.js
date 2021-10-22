@@ -1,6 +1,6 @@
 const themeSetter = document.querySelector(".switch");
 const selectedTheme = document.querySelector(".switch-ball");
-
+//todo: theme related things in another script
 const display = document.querySelector(".result");
 const delKey = document.querySelector(".del");
 const resetKey = document.querySelector(".reset");
@@ -12,12 +12,13 @@ const divisionKey = document.querySelector(".divides");
 const decimalKey = document.querySelector(".dec");
 const numbers = document.querySelectorAll(".num");
 
-const printable = [additionKey, substractionKey, moltiplicationKey, divisionKey, decimalKey, numbers];
-const operators = [additionKey, substractionKey, moltiplicationKey, divisionKey];
+const printables = [additionKey, substractionKey, moltiplicationKey, divisionKey, numbers];
+const operators = [additionKey, substractionKey, moltiplicationKey, divisionKey, resetKey];
+let decimalPointAllowed = true;
 
 //todo: show everything (number, operators) after click (or keydown)
 
-for(let item of printable){
+for(let item of printables){
     if(item === numbers){
         for(let num of numbers){
             num.addEventListener("click", function(){
@@ -31,11 +32,18 @@ for(let item of printable){
     }
 }
 
-/*decimalKey.addEventListener("click", function(){ //todo: let's check how can we insert only one decimal point
-    if(display.textContent.includes(".")){
-        return;
+decimalKey.addEventListener("click", function(){
+    if(decimalPointAllowed === true){
+        display.textContent += ".";
+        decimalPointAllowed = false;
     }
-});*/
+});
+
+for(let operator of operators){
+    operator.addEventListener("click", function(){
+        decimalPointAllowed = true;
+    })
+}
 
 //todo: check how can we correct the accuracy loss in decimal operations
 
@@ -44,7 +52,11 @@ resetKey.addEventListener("click", function(){
 });
 
 delKey.addEventListener("click", function(){
+    let lastValue = display.textContent.slice(-1);
     display.textContent = display.textContent.slice(0, -1); //* returns all the string except from the part starting from -1
+    if(lastValue === "."){
+        decimalPointAllowed = true;
+    }
 });
 
 equalsKey.addEventListener("click", function(){
@@ -55,36 +67,64 @@ equalsKey.addEventListener("click", function(){
     let firstOperand = expression.slice(0, operatorPos);
     let secondOperand = display.textContent.slice(operatorPos+1);
     
-    firstOperand = showResult(compute(firstOperand, operator, secondOperand));
+    firstOperand = compute(firstOperand, operator, secondOperand);
+    showResult(firstOperand);
+
+    if(!firstOperand.includes(".")){
+        decimalPointAllowed = true;
+    }
 });
 
 function showResult(result){
     display.textContent = result;
 }
 
+function fixDecimals(num1, num2){
+    let maxLength;
+    let firstValueDecimals = num1.split(".")[1];
+    let secondValueDecimals = num2.split(".")[1];
+    if(firstValueDecimals && secondValueDecimals){
+        maxLength = Math.max(firstValueDecimals.length, secondValueDecimals.length);
+        console.log(firstValueDecimals, secondValueDecimals, maxLength);
+        
+    } else if (firstValueDecimals || secondValueDecimals){
+        maxLength = firstValueDecimals || secondValueDecimals;
+        maxLength = maxLength.length;
+        console.log(maxLength);
+    }
+
+    return maxLength;
+}
+
 function compute(firstValue, operation, secondValue){
     let result;
+    let decimalDigits = fixDecimals(firstValue, secondValue);
+    //console.log(decimalDigits);
     firstValue = parseFloat(firstValue);
     secondValue = parseFloat(secondValue);
+
     switch(operation){
         case "+":
             result = firstValue + secondValue;
+            result = result.toFixed(decimalDigits);
             break;
 
         case "-":
             result = firstValue - secondValue;
+            result = result.toFixed(decimalDigits);
             break;
 
         case "x":
             result = firstValue * secondValue;
+            result = result.toFixed(decimalDigits);
             break;
 
         case "÷":
-            result = firstValue / secondValue;
+            result = firstValue / secondValue; //? here decimal parts are not easy to handle
             break;
     }
 
-    if(result === NaN || result === Infinity){
+    if(isNaN(result) || !isFinite(result)){
         result = "Error";
     }
     return result.toString();
