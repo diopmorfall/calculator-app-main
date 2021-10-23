@@ -1,6 +1,3 @@
-const themeSetter = document.querySelector(".switch");
-const selectedTheme = document.querySelector(".switch-ball");
-//todo: theme related things in another script
 const display = document.querySelector(".result");
 const delKey = document.querySelector(".del");
 const resetKey = document.querySelector(".reset");
@@ -11,58 +8,47 @@ const moltiplicationKey = document.querySelector(".times");
 const divisionKey = document.querySelector(".divides");
 const decimalKey = document.querySelector(".dec");
 const numbers = document.querySelectorAll(".num");
-
-const printables = [additionKey, substractionKey, moltiplicationKey, divisionKey, numbers];
+const printables = [additionKey, substractionKey, moltiplicationKey, divisionKey];
 const operators = [additionKey, substractionKey, moltiplicationKey, divisionKey, resetKey];
 let decimalPointAllowed = true;
 
-//todo: show everything (number, operators) after click (or keydown)
+//* functions
 
-for(let item of printables){
-    if(item === numbers){
-        for(let num of numbers){
-            num.addEventListener("click", function(){
-                display.textContent = display.textContent.toString() + num.textContent.toString();
-            });
-        }
-    } else {
+function displayValue(value){
+    display.textContent = display.textContent.toString() + value;
+}
+
+function setClickEventListeners(array){
+    for(let item of array){
         item.addEventListener("click", function(){
-            display.textContent = display.textContent.toString() + item.textContent.toString();
+            displayValue(item.textContent.toString());
         });
     }
 }
 
-decimalKey.addEventListener("click", function(){
+function allowDecimalPoint(){
     if(decimalPointAllowed === true){
         display.textContent += ".";
         decimalPointAllowed = false;
     }
-});
-
-for(let operator of operators){
-    operator.addEventListener("click", function(){
-        decimalPointAllowed = true;
-    })
 }
 
-//todo: check how can we correct the accuracy loss in decimal operations
-
-resetKey.addEventListener("click", function(){
+function clearAll(){
     display.textContent = "";
-});
+    decimalPointAllowed = true;
+}
 
-delKey.addEventListener("click", function(){
+function deleteValue(){
     let lastValue = display.textContent.slice(-1);
     display.textContent = display.textContent.slice(0, -1); //* returns all the string except from the part starting from -1
     if(lastValue === "."){
         decimalPointAllowed = true;
     }
-});
+}
 
-equalsKey.addEventListener("click", function(){
+function getResult(){
     let expression = display.textContent;
-
-    let operatorPos = expression.search(/\+|-|x|÷/); //? position of the operator
+    let operatorPos = expression.search(/\+|-|x|÷/); //? getting the position of the operator
     let operator = expression[operatorPos];
     let firstOperand = expression.slice(0, operatorPos);
     let secondOperand = display.textContent.slice(operatorPos+1);
@@ -73,7 +59,7 @@ equalsKey.addEventListener("click", function(){
     if(!firstOperand.includes(".")){
         decimalPointAllowed = true;
     }
-});
+}
 
 function showResult(result){
     display.textContent = result;
@@ -85,12 +71,12 @@ function fixDecimals(num1, num2){
     let secondValueDecimals = num2.split(".")[1];
     if(firstValueDecimals && secondValueDecimals){
         maxLength = Math.max(firstValueDecimals.length, secondValueDecimals.length);
-        console.log(firstValueDecimals, secondValueDecimals, maxLength);
+        //console.log(firstValueDecimals, secondValueDecimals, maxLength);
         
     } else if (firstValueDecimals || secondValueDecimals){
         maxLength = firstValueDecimals || secondValueDecimals;
         maxLength = maxLength.length;
-        console.log(maxLength);
+        //console.log(maxLength);
     }
 
     return maxLength;
@@ -126,7 +112,80 @@ function compute(firstValue, operation, secondValue){
 
     if(isNaN(result) || !isFinite(result)){
         result = "Error";
+        setTimeout(() => display.textContent  = "", 500);
     }
     return result.toString();
 }
+
+//* event listeners setting and function calls
+
+document.addEventListener("keydown", function(event){ //? setting the listener for other keys
+    switch(event.code){
+        case "NumpadAdd":
+            displayValue("+");
+            break;
+
+        case "NumpadSubtract":
+            displayValue("-");
+            break;
+
+        case "NumpadMultiply":
+            displayValue("x");
+            break;
+
+        case "NumpadDivide":
+            displayValue("÷");
+            break;
+
+        case "NumpadDecimal":
+            allowDecimalPoint();
+            break;
+
+        case "Delete":
+            clearAll();
+            break;
+
+        case "Backspace":
+            deleteValue();
+            break;
+
+        case "Enter":
+        case "NumpadEnter":
+            getResult();
+            break;
+    }
+});
+
+for(let i = 0; i < 10; i++){ //? setting the listener for each number of the numpad keyboard
+    document.addEventListener("keydown", function(event){
+        if(event.code == `Numpad${i}`){
+            displayValue(i);
+        }
+    });
+}
+
+for(let operator of operators){ //? allowing the insertion of the decimal point after this click event
+    operator.addEventListener("click", function(){ 
+        decimalPointAllowed = true;
+    });
+}
+
+document.addEventListener("keydown", function(event){ //? allowing the insertion of the decimal point after pressing these keys
+    if(event.code == "NumpadAdd" || event.code == "NumpadSubtract" || 
+        event.code == "NumpadMultiply" || event.code == "NumpadDivide" ){
+        decimalPointAllowed = true;
+    }
+});
+
+setClickEventListeners(printables);
+setClickEventListeners(numbers);
+
+decimalKey.addEventListener("click", allowDecimalPoint);
+
+resetKey.addEventListener("click", clearAll);
+
+delKey.addEventListener("click", deleteValue);
+
+equalsKey.addEventListener("click", getResult);
+
 
