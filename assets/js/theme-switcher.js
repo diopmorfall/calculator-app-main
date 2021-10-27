@@ -9,8 +9,6 @@ const deleteButton = document.querySelector(".del");
 const resetButton = document.querySelector(".reset");
 const equalsButton = document.querySelector(".equals");
 
-//* text color
-
 const themes = {
         bodyBgColor: ["hsl(222, 26%, 31%)", "hsl(0, 0%, 90%)", "hsl(268, 75%, 9%)"],
         textColor: ["hsl(0, 0, 100%)", "hsl(60, 10%, 19%)", "hsl(52, 100%, 62%)"],
@@ -25,7 +23,6 @@ const themes = {
             "0px 3.5px 0px 0px hsl(290, 70%, 36%)"
         ],
         delAndResetBgColor: ["hsl(225, 21%, 49%)", "hsl(185, 42%, 37%)", "hsl(281, 89%, 26%)"],
-        delAndResetTextColor: "hsl(0, 0, 100%)",
         delAndResetShadow: [
             "0px 3.5px 0px 0px hsl(224, 28%, 35%)",
             "0px 3.5px 0px 0px hsl(185, 58%, 25%)",
@@ -38,13 +35,29 @@ const themes = {
         ]
 };
 
-//* if(theme = 3){ del/reset.text color = "hsl(0, 0, 100%)"; equals-text color = "hsl(198, 20%, 13%)";}
-
 function removeClass(){
     for(let element of themeIdentifiers){
         element.classList.remove("theme-selected");
     }
 }
+
+function setButtonsBackgroundColor(index){
+    if(index == 2){
+        themeIdentifiers[index].style.backgroundColor = themes.themeIdentifierAndEqualsBgColor[index];
+        equalsButton.style.color = "hsl(198, 20%, 13%)";
+    } else {
+        themeIdentifiers[2].style.backgroundColor = "initial";
+    }
+}
+
+/*function setShadowAsBackgroundColor(target){
+    let initialBackgroundColor = target.style.backgroundColor;
+    let shadow = window.getComputedStyle(target).boxShadow;
+    shadow = shadow.split(") ")[0] + ")";
+    console.log(shadow);
+    target.style.backgroundColor = shadow;
+    setTimeout(() => target.style.backgroundColor = initialBackgroundColor, 90);
+}*/
 
 function setThemeStyles(index){
     body.style.backgroundColor = themes.bodyBgColor[index];
@@ -63,21 +76,33 @@ function setThemeStyles(index){
         key.style.boxShadow = themes.keyShadow[index];
     }
     
-    //deleteButton.style.color = resetButton.style.color = themes.delAndResetTextColor;
+    deleteButton.style.color = resetButton.style.color = equalsButton.style.color = "white";
     deleteButton.style.backgroundColor = resetButton.style.backgroundColor = themes.delAndResetBgColor[index];
     deleteButton.style.boxShadow = resetButton.style.boxShadow = themes.delAndResetShadow[index];
 
     equalsButton.style.backgroundColor = themes.themeIdentifierAndEqualsBgColor[index];
     equalsButton.style.boxShadow = themes.equalsShadow[index];
     
-    if(index == 2){
-        themeIdentifiers[index].style.backgroundColor = themes.themeIdentifierAndEqualsBgColor[index];
-        equalsButton.style.color = "hsl(198, 20%, 13%)";
-    } else {
-        themeIdentifiers[2].style.backgroundColor = "initial";
+    setButtonsBackgroundColor(index);
+
+    if(index == 0){ //? setting the heading text color to white, since it doesn't get set automatically
+        //console.log(themes.textColor[index]);
+        heading.style.color = "white";
     }
 
-    
+    /*if(index !== 0){ //? trying to change the background color of each key after they're clicked
+        for(let key of keys){
+            key.addEventListener("click", function(event){
+                setShadowAsBackgroundColor(event.target);
+            });        
+        }
+    } else {
+        for(let key of keys){
+            key.removeEventListener("click", function(event){
+                setShadowAsBackgroundColor(event.target);
+            });
+        }
+    }*/
 }
 
 for(let identifier of themeIdentifiers){
@@ -86,14 +111,10 @@ for(let identifier of themeIdentifiers){
         let themeIndex = this.getAttribute("id");
         let themeToggle = document.getElementById(themeIndex);
         themeToggle.classList.add("theme-selected");
-        //* set it to the right one and set the corresponding styles (themes.property[id])
         setThemeStyles(themeIndex);
     });
 }
 
-//todo: add event listeners to add active classes (buttons when clicked should have the same color of their shadow)
-//todo: try to understand why the text color remains of the previous theme when switching to the first one
-//todo: del, reset and equals buttons always have white text (equals button has it blue in the last theme, and it's correct)
 
 
 
