@@ -28,8 +28,8 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [Frontend Mentor](https://your-solution-url.com)
-- Live Site URL: [Github Pages](https://your-live-site-url.com)
+- Solution URL: [Frontend Mentor](https://www.frontendmentor.io/solutions/calculator-app-with-flexbox-sass-and-javascript-ljeGr5ker)
+- Live Site URL: [Github Pages](https://diopmorfall.github.io/calculator-app-main/)
 
 ## My process
 
@@ -57,7 +57,7 @@ This is not completed, it has a bunch of issues that need to be solved:
 
 ### Useful resources
 
-- [JavaScript.info](https://www.example.com) - A great site with a lot of JavaScript concepts explained clearly
+- [JavaScript.info](https://javascript.info/) - A great site with a lot of JavaScript concepts explained clearly
 - [IavaScript Event Keycodes](https://keycode.info/) - This is an amazing site that helped me identify quickly the key codes I needed
 
 
