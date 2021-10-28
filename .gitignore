@@ -16,6 +16,5 @@
 .prettierignore
 /design
 /style-guide.md
-/README-template.md
-/README.md
+/guide-README.md
 /assets/sass
